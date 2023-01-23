@@ -3,6 +3,7 @@ import edu.miu.waaassignment3.entity.Comment;
 import edu.miu.waaassignment3.entity.Post;
 import edu.miu.waaassignment3.entity.Users;
 import edu.miu.waaassignment3.service.UserService;
+import edu.miu.waaassignment3.springAop.ExecutionTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/v1/users")
 
-public class UserController {
+public class UserController  {
 
     private final UserService userService;
    @Autowired
@@ -27,10 +28,16 @@ public class UserController {
         return userService.findAll();
     }
 
+
+   @ExecutionTime
     @GetMapping("/{id}")
 
-    public Users findById(@PathVariable Long id){
-        return  userService.findById(id);
+    public Users findById(@PathVariable Long id) throws Exception{
+       if(5<7)
+       throw new Exception("Something wrong");
+      // System.out.println("The User is Fetched" );
+
+       return  userService.findById(id);
     }
 
     @PostMapping

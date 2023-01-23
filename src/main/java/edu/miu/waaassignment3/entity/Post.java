@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.List;
 
@@ -23,12 +25,13 @@ public class Post {
     private String title;
     private String content;
     private String author;
-    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.REMOVE,CascadeType.PERSIST})
     @JoinColumn(name = "post_id")
+    @Fetch(FetchMode.SELECT )
     @JsonManagedReference
     private List<Comment> comments;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JsonBackReference
     private Users users;
 
